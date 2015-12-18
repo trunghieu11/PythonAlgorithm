@@ -19,3 +19,14 @@ def gcd(a, b):
     while b != 0:
         a, b = b, a % b
     return a
+
+def power(base, exponent, mod):
+    if base >= mod:
+        base %= mod
+    if exponent == 0:
+        return 1 % mod
+    result = power(base, exponent >> 1, mod)
+    result = result * result % mod
+    if (exponent & 1) != 0:
+        result = result * base % mod
+    return result
