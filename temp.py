@@ -1,20 +1,39 @@
-__author__ = 'trunghieu11'
+def findPath(matrix):
+    matrix = matrix[0]
+    n = len(matrix)
+    m = len(matrix[0])
 
-def main():
-    fin = open("/home/nthieu6/Dropbox/WTE R&D Data/GameCategoryInterest/installedGames/installedIOSGames2.csv", "r")
-    fout = open("/home/nthieu6/Dropbox/WTE R&D Data/GameCategoryInterest/installedGames/installedIOSGames3.csv", "w")
-    table = []
-    line = fin.readline().split(",")
-    for i in range(1, len(line)):
-        line[i] = line[i][4:]
-    while len(line) > 1:
-        table.append(line)
-        line = fin.readline().split(",")
-    table[0][0] = 'UID'
-    for i in range(len(table[0])):
-        fout.writelines(','.join(str(table[j][i].rstrip()) for j in range(len(table))))
-        fout.writelines('\n')
+    queue = []
+    for i in range(n):
+        for j in range(m):
+            if matrix[i][j] == 1:
+                queue.append([i, j])
+                break
+        if len(queue) > 0:
+            break
+    dx = [-1, 0, 1, 0]
+    dy = [0, 1, 0, -1]
 
+    visited = [False for i in range(0, n * m + 1)]
+    visited[0] = True
+    visited[1] = True
+
+    while len(queue) > 0:
+        top = queue[0]
+        print top[0], top[1]
+        queue = queue[1:]
+        visited[matrix[top[0]][top[1]]] = True
+        for i in range(4):
+            nextX = top[0] + dx[i]
+            nextY = top[1] + dy[i]
+            if 0 <= nextX < n and 0 <= nextY < m and matrix[nextX][nextY] > matrix[top[0]][top[1]]:
+                queue.append([nextX, nextY])
+
+    for i in range(1, n * m + 1):
+        if not visited[i]:
+            return False
+    return True
 
 if __name__ == '__main__':
-    main()
+    matrix = [[[2,3],[1,4],[10,5],[7,6],[8,9]]]
+    print findPath(matrix)
