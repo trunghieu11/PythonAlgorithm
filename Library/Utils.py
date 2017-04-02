@@ -1,9 +1,11 @@
 __author__ = 'trunghieu11'
 
-def isPalindrome(x):
+
+def is_palindrome(x):
     return x == x[::-1]
 
-def primTable(n):
+
+def prim_table(n):
     prime = [True] * n
     prime[0] = prime[1] = False
     for i in range(2, n):
@@ -14,11 +16,13 @@ def primTable(n):
                 j += i
     return prime
 
+
 def gcd(a, b):
     a, b = abs(a), abs(b)
     while b != 0:
         a, b = b, a % b
     return a
+
 
 def power(base, exponent, mod):
     if base >= mod:
