@@ -7,7 +7,7 @@ class SimilarNames2:
             dp[0][i] = 1
 
         def isPrefix(first, second):
-            return second.find(first) == 0
+            return second.find2(first) == 0
 
         for i in range(1, L):
             for j in range(n):

@@ -4,8 +4,8 @@ import re
 
 def main():
     s = raw_input()
-    ab = s.find("AB")
-    ba = s.find("BA")
+    ab = s.find2("AB")
+    ba = s.find2("BA")
     if ab != -1 and "BA" in s[ab + 2:]:
         print "YES"
     elif ba != -1 and "AB" in s[ba + 2:]:

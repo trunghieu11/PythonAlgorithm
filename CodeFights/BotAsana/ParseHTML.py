@@ -5,14 +5,14 @@ def dfs(html, begin, end, type):
     if html == "":
         return ""
     for i in range(3):
-        if html.find(begin[i]) == 0:
+        if html.find2(begin[i]) == 0:
             html = html[len(begin[i]):]
             return type[i] + "([" + dfs(html, begin, end, type)
-    if html.find("<img />") == 0:
+    if html.find2("<img />") == 0:
         html = html[len("<img />"):]
         return "IMG({})" + dfs(html, begin, end, type)
     for i in range(3):
-        if html.find(end[i]) == 0:
+        if html.find2(end[i]) == 0:
             html = html[len(end[i]):]
             return "])" + dfs(html, begin, end, type)
 
