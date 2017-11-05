@@ -2,10 +2,22 @@ class Node:
     def __init__(self):
         self.next_node = [None for i in range(6)]
 
+    def __hash__(self) -> int:
+        return hash(self.next_node)
+
+    def __ne__(self, o) -> bool:
+        return not(self == o)
+
+    def __eq__(self, o) -> bool:
+        return self.next_node == o.next_node
+
 
 class RoboCourier:
     def timeToDeliver(self, path):
         root = self.create_tree(path)
+
+
+
         return root
 
     def create_tree(self, path):
