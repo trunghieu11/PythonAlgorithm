@@ -20,24 +20,43 @@ class RoboCourier:
         total_state = 6 * len(nodes)
         distance = [[10**10 for i in range(6)] for j in range(len(nodes))]
 
+        _, target_idx = self.find_node(target.x, target.y, nodes)
+
         distance[0][0] = 0
         self.update_distance(distance, 0, 0)
+        visited = set()
 
-        for i in range(total_state):
-            node_idx = int(i / 6)
-            direction = i % 6
+        while True:
+            best = 10**10
+            choose_node = -1
+            choose_direction = -1
+
+            for i in range(total_state):
+                cur_idx = int(i / 6)
+                direction = i % 6
+                if (cur_idx, direction) not in visited and distance[cur_idx][direction] < best:
+                    choose_node = cur_idx
+                    choose_direction = direction
+                    best = distance[cur_idx][direction]
+
+            if choose_node == -1:
+                return 0
+
+            if choose_node == target_idx:
+                return best
+
+            visited.add((choose_node, choose_direction))
+
             go_straight = 0
-            cur_node = nodes[node_idx]
-            while cur_node.near_node[direction]:
-                cur_node = cur_node.near_node[direction]
+            cur_node = nodes[choose_node]
+            while cur_node.near_node[choose_direction]:
+                cur_node = cur_node.near_node[choose_direction]
                 _, idx = self.find_node(cur_node.x, cur_node.y, nodes)
-                go_straight += 1
-                distance[idx][direction] = min(distance[idx][direction], distance[node_idx][direction]
-                                    + (4 * go_straight if go_straight <= 2 else (8 + (go_straight - 2) * 2)))
-                self.update_distance(distance, direction, idx)
 
-        _, target_idx = self.find_node(target.x, target.y, nodes)
-        return min(distance[target_idx])
+                go_straight += 1
+                distance[idx][choose_direction] = min(distance[idx][choose_direction], best
+                                               + (4 * go_straight if go_straight <= 2 else (8 + (go_straight - 2) * 2)))
+                self.update_distance(distance, choose_direction, idx)
 
     def create_path(self, path):
         nodes = []
@@ -82,4 +101,4 @@ class RoboCourier:
 if __name__ == '__main__':
     solver = RoboCourier()
     print(solver.timeToDeliver((
-        "RLFRFFRFRFFRFFLFFLRLRLFLFLRFFRFLRLRFLFFLFFFRLFRLFL", "RLRFRFRFLFLFLFFLRLFFLRLRFFFLFLFFLFRLFFFFRLFFLRLFFL", "FLRFRLRLFLRLFRLFLFFFRLRLRRFLFLFFFLRFLRFFLRFLRLLFLR", "LFFRLFRFRFRLLFLRFRLLFRLFFFRLRLLFRFLFLFRLLFFLFLRLFF", "FFLFLRRFFFLRFLRFLFLFFLRFLFFLFFFLRLFFFLRFLFRFFRFFFR", "FLRLRLRRFRLRFLFLFRRFLLFRFLRFFLRLFLFLRLFFLRLRFFLFLF", "LFLFLRFFFFRFRLFRFFFFFLFLFFLRLFFFRFFFFFLFFFLFLFRFRL", "LRLFLRLRRLFRLRRLRLRLRFLFLRLRLLRFLFRFRRLFFFLFLFFLLR", "LRLFFRFLFFFLLFRFLFRLRFFLFLFRRFFFFFLRRFFRLRLFFRLRLF", "LFRLRRLRLRRLRLRFLLFLRLLFLFLFLRLRFFRLRFLRFFRFLLFRFF")))
+        "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF", "FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF")))
