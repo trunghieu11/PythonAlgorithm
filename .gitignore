@@ -2,3 +2,4 @@
 .idea/inspectionProfiles/Project_Default.xml
 .idea/PythonAlgorithm.iml
 *.xml
+/temp.py
