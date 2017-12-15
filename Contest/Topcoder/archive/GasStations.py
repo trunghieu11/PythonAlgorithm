@@ -5,6 +5,8 @@ class GasStations:
         dist = dist + [tripLength]
         price = price + [0]
 
+        dist, price = zip(*sorted(zip(dist, price)))
+
         start = 0
         remain_gas = tankSize
         answer = 0
@@ -18,8 +20,8 @@ class GasStations:
             cheaper_index = -1
             for j in range(n):
                 if dist[j] > dist[cur_index] and price[j] < price[cur_index] and dist[j] - dist[cur_index] <= tankSize * mpg:
-                    cheaper_index = j
-                    break
+                    if cheaper_index == -1 or (price[j] < price[cheaper_index] and dist[j] <= dist[cheaper_index]):
+                        cheaper_index = j
 
             if cheaper_index >= 0:
                 total_gas = (dist[cheaper_index] - dist[cur_index]) / mpg  # calc total gas need to next stop
