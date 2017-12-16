@@ -121,7 +121,7 @@ int main() {
     string className, funcName;
     int pCount;
     cin >> className >> funcName >> pCount;
-    string fileName = "C:\\Users\\trunghieu11\\Documents\\PythonAlgorithm\\Contest\\Topcoder\\current\\" + className + ".py";
+    string fileName = className + ".py";
 
     freopen (fileName.c_str(), "w", stdout);
 
@@ -192,10 +192,10 @@ int main() {
     cout << "    return res\n";
     cout << "\n";
 
-    count << "def compare_answer(my_answer, correct_answer):\n";
-    count << "    if isinstance(my_answer, float) and isinstance(correct_answer, float):\n";
-    count << "        return round(my_answer, 6) == round(correct_answer, 6)\n";
-    count << "    return my_answer == correct_answer\n";
+    cout << "def compare_answer(my_answer, correct_answer):\n";
+    cout << "    if isinstance(my_answer, float) and isinstance(correct_answer, float):\n";
+    cout << "        return round(my_answer, 6) == round(correct_answer, 6)\n";
+    cout << "    return my_answer == correct_answer\n";
 
     cout << "all_right = True\n";
     cout << "tests_disabled = False\n";
