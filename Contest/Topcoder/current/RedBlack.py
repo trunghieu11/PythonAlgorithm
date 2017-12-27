@@ -144,10 +144,23 @@ class RedBlack:
         y.right = z
         x.parent = y
         z.parent = y
+
         x.left = t1
+        if t1 is not None:
+            t1.parent = x
+
         x.right = t2
+        if t2 is not None:
+            t2.parent = x
+
         z.left = t3
+        if t3 is not None:
+            t3.parent = z
+
         z.right = t4
+        if t4 is not None:
+            t4.parent = z
+
         x.color = "b"
         y.color = "r"
         z.color = "b"
